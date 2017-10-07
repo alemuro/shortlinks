@@ -1,0 +1,16 @@
+{
+  "name": "shortlinks",
+  "version": "1.0.0",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Aleix Murtra",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aws-sdk": "^2.130.0",
+    "dynamodb": "^1.0.0",
+    "joi": "^11.1.1"
+  }
+}

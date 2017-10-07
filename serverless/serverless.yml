@@ -1,0 +1,51 @@
+
+service: shortlinks
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: pro
+  region: eu-west-1
+
+functions:
+  health:
+    handler: handler.health
+    events:
+      - http:
+          path: health
+          method: get
+
+  go:
+    handler: handler.go
+    events:
+      - http:
+          path: to/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true
+
+  save:
+    handler: handler.save
+    events:
+      - http:
+          path: save
+          method: post
+
+resources:
+  Resources:
+    shortlinksTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:service}-${self:provider.stage}
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
